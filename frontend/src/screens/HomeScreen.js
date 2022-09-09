@@ -1,12 +1,7 @@
-import React, { useState, useEffect, useReducer } from "react";
+import React, { useEffect, useReducer } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import logger from "use-reducer-logger";
-//import data from "../data";
 import "bootstrap/dist/css/bootstrap.css";
-import { Action } from "history";
-// Put any other imports below so that CSS from your
-// components takes precedence over default styles.
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -23,7 +18,7 @@ const reducer = (state, action) => {
 
 const HomeScreen = () => {
   //const [products, setproducts] = useState([]);
-  const [{ loading, error, products }, dispatch] = useReducer(logger(reducer), {
+  const [{ loading, error, products }, dispatch] = useReducer(reducer, {
     products: [],
     loading: true,
     error: "",
