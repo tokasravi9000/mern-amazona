@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Product from "../components/Product";
+import { Helmet } from "react-helmet-async";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -44,6 +45,9 @@ const HomeScreen = () => {
     <div className="container">
       <div className="row">
         <div className="col-md-12">
+          <Helmet>
+            <title>Amazona</title>
+          </Helmet>
           <h1>Featured Products</h1>
           <div className="products">
             {loading ? (
