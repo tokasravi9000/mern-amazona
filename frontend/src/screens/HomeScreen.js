@@ -1,17 +1,44 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import logger from "use-reducer-logger";
 //import data from "../data";
 import "bootstrap/dist/css/bootstrap.css";
+import { Action } from "history";
 // Put any other imports below so that CSS from your
 // components takes precedence over default styles.
 
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "FETCH_REQUEST":
+      return { ...state, loading: true };
+    case "FETCH_SUCCESS":
+      return { ...state, products: action.payload, loading: false };
+    case "FETCH_FAIL":
+      return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
 const HomeScreen = () => {
-  const [products, setproducts] = useState([]);
+  //const [products, setproducts] = useState([]);
+  const [{ loading, error, products }, dispatch] = useReducer(logger(reducer), {
+    products: [],
+    loading: true,
+    error: "",
+  });
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios.get("/api/products");
-      setproducts(result.data);
+      dispatch({ type: "FETCH_REQUEST" });
+      try {
+        const result = await axios.get("/api/products");
+        dispatch({ type: "FETCH_SUCCESS", payload: result.data });
+      } catch (err) {
+        dispatch({ type: "FETCH_FAIL", payload: err.message });
+      }
+
+      //setproducts(result.data);
     };
     fetchData();
   }, []);
@@ -22,25 +49,31 @@ const HomeScreen = () => {
         <div className="col-md-12">
           <h1>Featured Products</h1>
           <div className="products">
-            {products.map((product) => (
-              <div key={product.slug} className="product text-center">
-                <Link to={`/product/${product.slug}`}>
-                  <img src={product.image} alt={product.name} />
-                </Link>
-                <div className="product-info">
-                  <Link
-                    to={`/product/${product.slug}`}
-                    className="product__Title"
-                  >
-                    <p>{product.name}</p>
+            {loading ? (
+              <div>Loading....</div>
+            ) : error ? (
+              <div>{error}</div>
+            ) : (
+              products.map((product) => (
+                <div key={product.slug} className="product text-center">
+                  <Link to={`/product/${product.slug}`}>
+                    <img src={product.image} alt={product.name} />
                   </Link>
-                  <p className="product__price">
-                    <strong>${product.price}</strong>
-                  </p>
-                  <button className="btn btn-primary">Add to cart</button>
+                  <div className="product-info">
+                    <Link
+                      to={`/product/${product.slug}`}
+                      className="product__Title"
+                    >
+                      <p>{product.name}</p>
+                    </Link>
+                    <p className="product__price">
+                      <strong>${product.price}</strong>
+                    </p>
+                    <button className="btn btn-primary">Add to cart</button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
       </div>
