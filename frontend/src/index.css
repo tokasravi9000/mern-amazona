@@ -32,11 +32,17 @@ main {
 .product {
   border: 1px #404040 solid;
   margin: 1rem;
+  width: 22%;
 }
 .product img {
   width: 100%;
-  max-width: 400px;
+  max-width: 250px;
+  height: auto;
 }
 .product-info {
   padding: 1rem;
+}
+.product-info .product__Title {
+  color: #333;
+  text-decoration: none;
 }
