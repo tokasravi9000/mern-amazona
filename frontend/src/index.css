@@ -17,6 +17,10 @@ code {
 main {
   flex: 1;
 }
+.btn-primary {
+  background-color: #f0c040 !important;
+  color: black !important;
+}
 .products {
   display: flex;
   flex-wrap: wrap;
@@ -38,4 +42,7 @@ main {
 .product-info .product__Title {
   color: #333;
   text-decoration: none;
+}
+.rating span {
+  color: #ffc000;
 }
