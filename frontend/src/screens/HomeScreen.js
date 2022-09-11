@@ -50,7 +50,7 @@ const HomeScreen = () => {
           <Helmet>
             <title>Amazona</title>
           </Helmet>
-          <h1>Featured Products</h1>
+          <h3 className="mt-3 mb-3">Featured Products</h3>
           <div className="products">
             {loading ? (
               <LoadingBox />
