@@ -10,6 +10,8 @@ import Container from "react-bootstrap/Container";
 import { LinkContainer } from "react-router-bootstrap";
 import { useContext } from "react";
 import { Store } from "./Store";
+import SigninScreen from "./screens/SigninScreen";
+import CartScreen from "./screens/CartScreen";
 
 function App() {
   const { state } = useContext(Store);
@@ -24,11 +26,14 @@ function App() {
                 <Navbar.Brand>Amazona</Navbar.Brand>
               </LinkContainer>
               <Nav className="ms-auto">
+                <Link to="/signin" className="nav-link">
+                  SignIn
+                </Link>
                 <Link to="/cart" className="nav-link">
                   Cart{" "}
                   {cart.cartItems.length > 0 && (
                     <Badge pill bg="danger">
-                      {cart.cartItems.length}
+                      {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
                     </Badge>
                   )}
                 </Link>
@@ -40,7 +45,9 @@ function App() {
           <Container className="mt-3">
             <Routes>
               <Route path="/product/:slug" element={<ProductScreen />} />
+              <Route path="/cart" element={<CartScreen />} />
               <Route path="/" element={<HomeScreen />} />
+              <Route path="/signin" element={<SigninScreen />} />
             </Routes>
           </Container>
         </main>

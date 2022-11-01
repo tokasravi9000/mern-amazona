@@ -53,3 +53,12 @@ main {
 .img-large {
   max-width: 100%;
 }
+.small-container {
+  max-width: 600px;
+}
+.img-large {
+  padding: 1rem;
+}
+.img-thumbnail {
+  height: 80px;
+}
